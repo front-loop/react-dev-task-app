@@ -1,29 +1,9 @@
 import { useReducer } from 'react'
-import { ACTIONS, ActionType, TaskItem } from './types'
 import AddTask from './components/add-task'
 import TaskList from './components/task-list'
-
-const initialTasks: TaskItem[] = []
-
-function tasksReducer(tasks: typeof initialTasks, action: ActionType) {
-  switch (action.type) {
-    case ACTIONS.ADD: {
-      return [...tasks, { id: action.id, text: action.text, done: false }]
-    }
-    case ACTIONS.CHANGE: {
-      return tasks.map((t) => {
-        if (t.id === action.task.id) {
-          return action.task
-        } else {
-          return t
-        }
-      })
-    }
-    case ACTIONS.DELETE: {
-      return tasks.filter((t) => t.id !== action.id)
-    }
-  }
-}
+import { ACTIONS, TaskItem } from './lib/types'
+import { tasksReducer } from './lib/tasks-reducer'
+import { initialTasks } from './lib/constants'
 
 export default function App() {
   const [tasks, dispatch] = useReducer(tasksReducer, initialTasks)
