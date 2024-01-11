@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react'
-import { TasksDispatchContext } from '../lib/tasks-context'
+import { useState } from 'react'
+import { useTasksDispatch } from '../lib/tasks-provider'
 import { ACTIONS } from '../lib/types'
 
 export default function AddTask() {
   const [text, setText] = useState('')
-  const dispatch = useContext(TasksDispatchContext)
+  const dispatch = useTasksDispatch()
 
   return (
     <div className="add">

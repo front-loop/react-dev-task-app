@@ -1,14 +1,10 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { ACTIONS, TaskItem } from '../lib/types'
-import { TasksDispatchContext } from '../lib/tasks-context'
+import { useTasksDispatch } from '../lib/tasks-provider'
 
-interface TaskProps {
-  task: TaskItem
-}
-
-export default function Task({ task }: TaskProps) {
+export default function Task({ task }: { task: TaskItem }) {
   const [isEditing, setIsEditing] = useState(false)
-  const dispatch = useContext(TasksDispatchContext)
+  const dispatch = useTasksDispatch()
 
   if (isEditing) {
     return (
