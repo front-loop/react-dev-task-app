@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useTasksDispatch } from '../lib/tasks-provider'
+import { useTasksDispatch } from './task-provider'
 import { ACTIONS } from '../lib/types'
 
-export default function AddTask() {
+export default function TaskInput() {
   const [text, setText] = useState('')
   const dispatch = useTasksDispatch()
 
