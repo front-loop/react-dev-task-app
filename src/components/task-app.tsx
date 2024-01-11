@@ -1,9 +1,9 @@
 import { useReducer } from 'react'
-import AddTask from './components/add-task'
-import TaskList from './components/task-list'
-import { tasksReducer } from './lib/tasks-reducer'
-import { initialTasks } from './lib/constants'
-import { TasksContext, TasksDispatchContext } from './lib/tasks-context'
+import AddTask from './add-task'
+import TaskList from './task-list'
+import { tasksReducer } from '../lib/tasks-reducer'
+import { initialTasks } from '../lib/constants'
+import { TasksContext, TasksDispatchContext } from '../lib/tasks-context'
 
 export default function App() {
   const [tasks, dispatch] = useReducer(tasksReducer, initialTasks)
