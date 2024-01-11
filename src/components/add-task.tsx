@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { TasksDispatchContext } from '../lib/tasks-context'
+import { ACTIONS } from '../lib/types'
 
-interface AddTaskProps {
-  onAddTask: (text: string) => void
-}
-
-export default function AddTask({ onAddTask }: AddTaskProps) {
+export default function AddTask() {
   const [text, setText] = useState('')
+  const dispatch = useContext(TasksDispatchContext)
 
   return (
     <div className="add">
@@ -13,7 +12,11 @@ export default function AddTask({ onAddTask }: AddTaskProps) {
       <button
         onClick={() => {
           if (!text.trim()) return
-          onAddTask(text)
+          dispatch({
+            type: ACTIONS.ADD,
+            id: crypto.randomUUID(),
+            text,
+          })
           setText('')
         }}
       >

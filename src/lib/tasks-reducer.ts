@@ -18,5 +18,8 @@ export function tasksReducer(tasks: typeof initialTasks, action: ActionType) {
     case ACTIONS.DELETE: {
       return tasks.filter((t) => t.id !== action.id)
     }
+    default: {
+      throw Error('Unknown Type')
+    }
   }
 }
