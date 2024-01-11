@@ -1,38 +1,53 @@
-import { useState } from 'react'
-import { TaskItem } from './types'
+import { useReducer } from 'react'
+import { ACTIONS, ActionType, TaskItem } from './types'
 import AddTask from './components/add-task'
 import TaskList from './components/task-list'
 
 const initialTasks: TaskItem[] = []
 
-export default function App() {
-  const [tasks, setTasks] = useState<TaskItem[]>(initialTasks)
-
-  function handleAddTask(text: string) {
-    setTasks([
-      ...tasks,
-      {
-        id: crypto.randomUUID(),
-        text,
-        done: false,
-      },
-    ])
-  }
-
-  function handleChangeTask(newTask: TaskItem) {
-    setTasks(
-      tasks.map((t) => {
-        if (t.id === newTask.id) {
-          return newTask
+function tasksReducer(tasks: typeof initialTasks, action: ActionType) {
+  switch (action.type) {
+    case ACTIONS.ADD: {
+      return [...tasks, { id: action.id, text: action.text, done: false }]
+    }
+    case ACTIONS.CHANGE: {
+      return tasks.map((t) => {
+        if (t.id === action.task.id) {
+          return action.task
         } else {
           return t
         }
       })
-    )
+    }
+    case ACTIONS.DELETE: {
+      return tasks.filter((t) => t.id !== action.id)
+    }
+  }
+}
+
+export default function App() {
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks)
+
+  function handleAddTask(text: string) {
+    dispatch({
+      type: ACTIONS.ADD,
+      id: crypto.randomUUID(),
+      text,
+    })
+  }
+
+  function handleChangeTask(newTask: TaskItem) {
+    dispatch({
+      type: ACTIONS.CHANGE,
+      task: newTask,
+    })
   }
 
   function handleDeleteTask(id: string) {
-    setTasks(tasks.filter((t) => t.id !== id))
+    dispatch({
+      type: ACTIONS.DELETE,
+      id,
+    })
   }
 
   return (
